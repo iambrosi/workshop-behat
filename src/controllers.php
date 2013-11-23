@@ -1,8 +1,10 @@
 <?php
 
+use PHPMvd\Validator\UniqueEmail;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Email;
 
 /** @var Application $app */
 
@@ -28,7 +30,7 @@ $app->post('/users/create', function (Application $app, Request $request) {
     /** @var \Symfony\Component\Form\FormInterface $form */
     $form = $app['form.factory']->createBuilder('form')
         ->add('name')
-        ->add('email')
+        ->add('email', 'email', array('constraints' => array(new Email(), new UniqueEmail($app['db']))))
         ->getForm();
 
     $form->handleRequest($request);

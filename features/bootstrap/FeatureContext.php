@@ -58,15 +58,16 @@ class FeatureContext extends MinkContext
             $this->assertElementContains('.table', $row['email']);
         }
     }
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+
+    /**
+     * @Then /^I should see the user form$/
+     */
+    public function iShouldSeeTheUserForm()
+    {
+        return array(
+            new \Behat\Behat\Context\Step\Then('I should see "Nombre"'),
+            new \Behat\Behat\Context\Step\Then('I should see "Email"'),
+            new \Behat\Behat\Context\Step\Then('I should see "Submit"'),
+        );
+    }
 }

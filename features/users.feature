@@ -14,9 +14,7 @@ Feature:
   Scenario: Crear usuarios
     Given I am on "/"
     When I follow "Crear Usuario"
-    Then I should see "Nombre"
-    And should see "Email"
-    And should see "Submit"
+    Then I should see the user form
     When I fill in "form[name]" with "John Doe"
     And fill in "form[email]" with "john@doe.com"
     And press "Submit"
@@ -25,3 +23,18 @@ Feature:
     And I should see the users:
       | name     | email        |
       | John Doe | john@doe.com |
+
+  Scenario: El usuario no puede agregarse dos veces
+    Given I am on "/"
+    When I follow "Crear Usuario"
+    And I fill in "form[name]" with "John Doe"
+    And fill in "form[email]" with "john@doe.com"
+    And press "Submit"
+
+    And I follow "Crear Usuario"
+    And I fill in "form[name]" with "John Doe"
+    And fill in "form[email]" with "john@doe.com"
+    And press "Submit"
+
+    Then the response status code should be 400
+    And I should see "El email ya existe"

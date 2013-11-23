@@ -1,11 +1,6 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 
 //
@@ -21,6 +16,11 @@ use Behat\MinkExtension\Context\MinkContext;
 class FeatureContext extends MinkContext
 {
     /**
+     * @var Doctrine\DBAL\Connection
+     */
+    private $connection;
+
+    /**
      * Initializes context.
      * Every scenario gets its own context object.
      *
@@ -28,9 +28,36 @@ class FeatureContext extends MinkContext
      */
     public function __construct(array $parameters)
     {
-        // Initialize your context here
+        $config           = new \Doctrine\DBAL\Configuration();
+        $connectionParams = array(
+            'dbname'   => 'test',
+            'user'     => 'root',
+            'password' => '',
+            'host'     => 'localhost',
+            'driver'   => 'pdo_mysql',
+        );
+        $this->connection = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     }
 
+    /**
+     * @Given /^there are no users in the database$/
+     */
+    public function thereAreNoUsersInTheDatabase()
+    {
+        $this->connection->exec('DELETE FROM users');
+    }
+
+    /**
+     * @Given /^I should see the users:$/
+     */
+    public function iShouldSeeTheUsers(TableNode $table)
+    {
+        $hash = $table->getHash();
+        foreach ($hash as $row) {
+            $this->assertElementContains('.table', $row['name']);
+            $this->assertElementContains('.table', $row['email']);
+        }
+    }
 //
 // Place your definition and hook methods here:
 //

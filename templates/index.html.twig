@@ -1,0 +1,33 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <h2>Listado de usuarios</h2>
+    <hr/>
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th style="width: 10%;">ID</th>
+                <th>Nombre</th>
+                <th style="width: 30%;">email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">
+                        No hay usuarios registrados.
+                        <span class="text-muted">Tal vez nadie asisti&oacute; al workshop? :)</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

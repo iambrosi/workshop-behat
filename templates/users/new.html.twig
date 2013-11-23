@@ -1,0 +1,31 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <form class="col-md-6" role="form" action="{{ path('users_create') }}" method="post">
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class':'form-control' }}) }}
+                {{ form_errors(form.name) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class':'form-control' }}) }}
+                {{ form_errors(form.email) }}
+            </div>
+            {{ form_widget(form) }}
+
+            <button class="btn btn-primary">Submit</button>
+        </form>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Creaci&oacute;n de usuarios</h3>
+                </div>
+                <div class="panel-body">
+                    Para crear usuarios se debe ingresar el <strong>nombre</strong> y la <strong>direcci&oacute;n de email</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

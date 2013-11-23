@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title '' %} - My Silex Application</title>
+
+        <link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="{{ app.request.basepath }}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <script src="{{ app.request.basepath }}/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <ul class="nav nav-pills pull-right">
+                    <li{% if page|default(null) == 'users' %} class="active"{% endif %}>
+                        <a href="{{ path('homepage') }}">Usuarios</a>
+                    </li>
+                    <li{% if page|default(null) == 'new_user' %} class="active"{% endif %}>
+                        <a href="{{ path('users_new') }}">Crear Usuario</a>
+                    </li>
+                </ul>
+                <h1>
+                    Tech Meetup 2013
+                    <small>Behat Workshop</small>
+                </h1>
+            </div>
+
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

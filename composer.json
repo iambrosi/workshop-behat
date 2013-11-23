@@ -29,5 +29,12 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
+    },
+    "require-dev": {
+        "behat/behat": "~2.4",
+        "behat/mink": "~1.4",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*"
     }
 }
